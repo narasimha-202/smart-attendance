@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Student Attendance Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="topbar">
+            <div>
+                <h1>Smart Student Attendance Portal</h1>
+                <p>Student Self Attendance System</p>
+            </div>
+        </header>
+
+        <section id="registerPage" class="card">
+            <h2>Create Account</h2>
+            <div class="grid">
+                <div class="field"><label>Full Name</label><input type="text" id="regName" placeholder="Enter your full name"></div>
+                <div class="field"><label>Roll Number</label><input type="text" id="regRoll" placeholder="23KD1A0501"></div>
+                <div class="field"><label>Password</label><input type="password" id="regPass"></div>
+                <div class="field"><label>Confirm Password</label><input type="password" id="regConfirm"></div>
+            </div>
+            <button id="registerBtn" class="primaryBtn"><i class="fa-solid fa-user-plus"></i> Register</button>
+            <p class="switch">Already Registered? <a href="#" id="gotoLogin">Login Here</a></p>
+        </section>
+
+        <section id="loginPage" class="card hidden">
+            <h2>Student Login</h2>
+            <div class="field"><label>Roll Number</label><input type="text" id="loginRoll"></div>
+            <div class="field"><label>Password</label><input type="password" id="loginPass"></div>
+            <button id="loginBtn" class="primaryBtn"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+            <p class="switch">New Student? <a href="#" id="gotoRegister">Register Here</a></p>
+        </section>
+
+        <section id="dashboard" class="hidden">
+            <div class="welcomeCard">
+                <div>
+                    <h2 id="studentName">Student</h2>
+                    <p id="studentRoll">Roll Number</p>
+                    <p id="greeting" class="greetingText"></p>
+                    <p id="liveDateTime" class="dateTime"></p>
+                </div>
+                <div class="flex gap-3">
+
+    <button id="resetAttendanceBtn"
+        class="bg-yellow-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-yellow-600">
+        <i class="fa-solid fa-rotate-left"></i>
+        Reset Attendance
+    </button>
+
+    <button id="logoutBtn">
+        Logout
+    </button>
+
+</div>
+            </div>
+            <div class="historyCard">
+
+<h3>Student Information</h3>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+
+<div>
+
+<label>Name</label>
+
+<h4 id="profileName"></h4>
+
+</div>
+
+<div>
+
+<label>Roll Number</label>
+
+<h4 id="profileRoll"></h4>
+
+</div>
+
+<div>
+
+<label>Registered</label>
+
+<h4 id="registeredDate"></h4>
+
+</div>
+
+<div>
+
+<label>Attendance Status</label>
+
+<h4 id="profileStatus"></h4>
+
+</div>
+
+</div>
+
+</div>
+
+            <div class="statsGrid">
+
+    <div class="statCard">
+        <div class="icon blue">
+            <i class="fa-solid fa-percent"></i>
+        </div>
+        <h4>Attendance</h4>
+        <h2 id="overallPercent">0%</h2>
+    </div>
+
+    <div class="statCard">
+        <div class="icon green">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <h4>Present Days</h4>
+        <h2 id="presentCount">0</h2>
+    </div>
+
+    <div class="statCard">
+        <div class="icon red">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <h4>Absent Days</h4>
+        <h2 id="absentCount">0</h2>
+    </div>
+
+    <div class="statCard">
+        <div class="icon blue">
+            <i class="fa-solid fa-calendar-days"></i>
+        </div>
+        <h4>Working Days</h4>
+        <h2 id="workingDays">0</h2>
+    </div>
+
+    <div class="statCard">
+        <div class="icon green">
+            <i class="fa-solid fa-fire"></i>
+        </div>
+        <h4>Current Streak</h4>
+        <h2 id="currentStreak">0</h2>
+    </div>
+
+    <div class="statCard">
+        <div class="icon blue">
+            <i class="fa-solid fa-trophy"></i>
+        </div>
+        <h4>Longest Streak</h4>
+        <h2 id="longestStreak">0</h2>
+    </div>
+
+    <div class="statCard">
+        <div class="icon red">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h4>Need for 75%</h4>
+        <h2 id="neededDays">0</h2>
+    </div>
+
+    <div class="statCard">
+        <div class="icon green">
+            <i class="fa-solid fa-award"></i>
+        </div>
+        <h4>Status</h4>
+        <h2 id="attendanceStatus">Good</h2>
+    </div>
+
+</div>
+            <div class="todayCard">
+                <h3>Today's Attendance</h3>
+                <p id="todayStatus" class="font-bold my-2"></p>
+                <div id="attendanceControls" class="flex gap-2 justify-center">
+                    <button id="presentBtn" class="bg-green-500 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-600">Mark Present</button>
+                    <button id="absentBtn" class="bg-red-500 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-600">Mark Absent</button>
+                </div>
+            </div>
+
+            <div class="historyCard mt-6">
+                <h3 class="mb-4">Monthly Calendar View</h3>
+                <div id="calendarGrid" class="grid grid-cols-7 gap-2 text-center text-sm"></div>
+            </div>
+
+            <div class="historyCard mt-6">
+                <div class="historyHeader"><h3>History</h3></div>
+                <table>
+                    <thead><tr><th>Date</th><th>Time</th><th>Status</th></tr></thead>
+                    <tbody id="historyTable"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+    <div id="toast"></div>
+    <script src="script.js"></script>
+</body>
+</html>
