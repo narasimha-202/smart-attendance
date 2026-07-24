@@ -82,16 +82,41 @@ function renderDashboard() {
     const rec = currentUser.attendance.find(i => i.date === todayStr);
     
     // 1. Overall Stats (Excluding Sundays)
-    const allWorkingDays = currentUser.attendance.filter(a => !isSunday(new Date(a.date)));
+    const allWorkingDays =
+
+currentUser.attendance.filter(a=>{
+
+return !isSunday(new Date(a.date))
+
+&&
+
+a.status!=="Holiday";
+
+});
     const allPresents = allWorkingDays.filter(i => i.status === "Present").length;
     const totalWorkingDaysCount = allWorkingDays.length;
     const allPercent = totalWorkingDaysCount ? ((allPresents / totalWorkingDaysCount) * 100) : 0;
     
     // 2. Monthly Stats (Excluding Sundays)
-    const monthWorkingDays = currentUser.attendance.filter(a => {
-        const d = new Date(a.date);
-        return d.getMonth() === currentViewDate.getMonth() && d.getFullYear() === currentViewDate.getFullYear() && !isSunday(d);
-    });
+    const monthWorkingDays = currentUser.attendance.filter(a=>{
+
+const d = new Date(a.date);
+
+return d.getMonth()===currentViewDate.getMonth()
+
+&&
+
+d.getFullYear()===currentViewDate.getFullYear()
+
+&&
+
+!isSunday(d)
+
+&&
+
+a.status!=="Holiday";
+
+});
     const monthPresents = monthWorkingDays.filter(i => i.status === "Present").length;
     const monthWorkingCount = monthWorkingDays.length;
     const monthAbsents = monthWorkingCount - monthPresents;
@@ -139,6 +164,7 @@ function renderCalendar(mPresents, mAbsents, mWorking, mPercent) {
             <button onclick="changeMonth(-1)" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">◀</button>
             <span class="font-bold text-lg">${currentViewDate.toLocaleString("default", {month: "long"})} ${currentViewDate.getFullYear()}</span>
             <button onclick="changeMonth(1)" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">▶</button>
+            
         </div>`;
     "MTWTFSS".split("").forEach(d => grid.innerHTML += `<div class="font-bold text-blue-600">${d}</div>`);
 
@@ -165,6 +191,19 @@ function renderCalendar(mPresents, mAbsents, mWorking, mPercent) {
         grid.appendChild(cell);
     }
 }
+document
+.getElementById("holidayBtn")
+.addEventListener("click",()=>{
+
+updateAttendance(
+
+"Holiday",
+
+formatLocalDate(new Date())
+
+);
+
+});
 
 function changeMonth(offset) { currentViewDate.setMonth(currentViewDate.getMonth() + offset); renderDashboard(); }
 
