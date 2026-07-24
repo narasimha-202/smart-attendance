@@ -211,8 +211,34 @@ function renderHistory() {
     const tbody = document.getElementById("historyTable"); 
     tbody.innerHTML = "";
     [...currentUser.attendance].sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(r => {
-        tbody.innerHTML += `<tr><td>${r.date}</td><td>${r.time}</td><td class="font-bold ${r.status === 'Present' ? 'text-green-600' : 'text-red-600'}">${r.status}</td></tr>`;
-    });
+       let color = "text-red-600";
+
+if (r.status === "Present") {
+
+    color = "text-green-600";
+
+}
+else if (r.status === "Holiday") {
+
+    color = "text-blue-600";
+
+}
+
+tbody.innerHTML += `
+<tr>
+
+<td>${r.date}</td>
+
+<td>${r.time}</td>
+
+<td class="font-bold ${color}">
+
+${r.status}
+
+</td>
+
+</tr>
+`;
 }
 
 function updateDateTime() {
